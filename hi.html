@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Công Việc</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: auto;
+            text-align: center;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Quản Lý Công Việc</h2>
+    <input type="text" id="taskInput" placeholder="Nhập công việc...">
+    <button id="addTaskButton">Thêm</button>
+    <ul id="taskList"></ul>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const taskInput = document.getElementById("taskInput");
+            const addTaskButton = document.getElementById("addTaskButton");
+            const taskList = document.getElementById("taskList");
+            
+            let tasks = [];
+            
+            function renderTasks() {
+                taskList.innerHTML = "";
+                tasks.forEach((task, index) => {
+                    const li = document.createElement("li");
+                    li.textContent = task;
+                    
+                    const editButton = document.createElement("button");
+                    editButton.textContent = "Sửa";
+                    editButton.onclick = () => editTask(index);
+                    
+                    const deleteButton = document.createElement("button");
+                    deleteButton.textContent = "Xóa";
+                    deleteButton.onclick = () => deleteTask(index);
+                    
+                    li.appendChild(editButton);
+                    li.appendChild(deleteButton);
+                    taskList.appendChild(li);
+                });
+            }
+            
+            function addTask() {
+                if (taskInput.value.trim() !== "") {
+                    tasks.push(taskInput.value.trim());
+                    taskInput.value = "";
+                    renderTasks();
+                }
+            }
+            
+            function editTask(index) {
+                const newTask = prompt("Chỉnh sửa công việc:", tasks[index]);
+                if (newTask !== null) {
+                    tasks[index] = newTask.trim();
+                    renderTasks();
+                }
+            }
+            
+            function deleteTask(index) {
+                tasks.splice(index, 1);
+                renderTasks();
+            }
+            
+            addTaskButton.addEventListener("click", addTask);
+            renderTasks();
+        });
+    </script>
+</body>
+</html>
