@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đếm số lần xuất hiện của từ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        textarea {
+            width: 80%;
+            height: 150px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #28a745;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #result {
+            margin-top: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+            white-space: pre-wrap;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h2>Nhập đoạn văn bản:</h2>
+    <textarea id="textInput"></textarea>
+    <br>
+    <button onclick="analyzeText()">Phân tích</button>
+    <h2>Kết quả:</h2>
+    <pre id="result"></pre>
+
+    <script>
+        function countWords(text) {
+            text = text.toLowerCase().replace(/[.,!?;()"'-]/g, "");
+            let words = text.split(/\s+/);
+            let wordCount = {};
+            words.forEach(word => {
+                if (word) {
+                    wordCount[word] = (wordCount[word] || 0) + 1;
+                }
+            });
+            return wordCount;
+        }
+
+        function analyzeText() {
+            let inputText = document.getElementById("textInput").value;
+            let result = countWords(inputText);
+            let output = "Số lần xuất hiện của các từ:\n";
+            for (let word in result) {
+                output += `${word}: ${result[word]}\n`;
+            }
+            document.getElementById("result").textContent = output;
+        }
+    </script>
+</body>
+</html>
